@@ -6,8 +6,12 @@ const HomePage = () => {
   const [auth, setAuth] = useAuth();
   return (
     <Layout title={'Best Offers'}>
-      <h1>HomePage</h1>
-      <pre>{JSON.stringify(auth, null, 4)}</pre>
+      <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-md-9">
+          <h1>All Products</h1>
+        </div>
+      </div>
     </Layout>
   );
 };
