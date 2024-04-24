@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { GiShoppingCart } from 'react-icons/gi';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import SearchInput from '../Form/SearchInput';
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -93,17 +94,7 @@ const Header = () => {
                   Cart (0)
                 </NavLink>
               </li>
-              <form className="d-flex" role="search">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
+              <SearchInput />
             </ul>
           </div>
         </div>
