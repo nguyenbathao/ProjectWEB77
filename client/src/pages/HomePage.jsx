@@ -5,7 +5,9 @@ import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/cart';
+import { AiOutlineReload } from 'react-icons/ai';
 import toast from 'react-hot-toast';
+import '../styles/Homepage.css';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -112,8 +114,8 @@ const HomePage = () => {
 
   return (
     <Layout title={'Best Offers - All Product'}>
-      <div className="row">
-        <div className="col-md-2">
+      <div className="container-fluid row mt-3 home-page">
+        <div className="col-md-3 filters">
           {/*Filter by category*/}
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
@@ -125,7 +127,7 @@ const HomePage = () => {
           </div>
 
           {/*Filter by price*/}
-          <h4 className="text-center">Filter By Price</h4>
+          <h4 className="text-center mt-4">Filter By Price</h4>
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
@@ -153,18 +155,25 @@ const HomePage = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
-                  <p className="card-context">{p.description.substring(0, 30)}...</p>
-                  <p className="card-context">$ {p.price}</p>
+
+                  <h5 className="card-title card-price">
+                    {p.price.toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                    })}
+                  </h5>
+                  <p className="card-text ">{p.description.substring(0, 60)}...</p>
                   <button
-                    className="btn btn-primary ms-1"
+                    className="btn btn-info ms-1"
                     onClick={() => navigate(`/product/${p.slug}`)}
                   >
                     More Details
                   </button>
                   <button
-                    className="btn btn-secondary ms-1"
+                    className="btn btn-dark ms-1"
                     onClick={() => {
                       setCart([...cart, p]);
+                      localStorage.setItem('cart', JSON.stringify([...cart, p]));
                       toast.success('Item added to cart');
                     }}
                   >
@@ -177,13 +186,20 @@ const HomePage = () => {
           <div className="m-2 p-3">
             {products && products.length < total && (
               <button
-                className="btn btn-warning"
+                className="btn loadmore"
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
                 }}
               >
-                {loading ? 'Loading...' : 'Loadmore'}
+                {loading ? (
+                  'Loading ...'
+                ) : (
+                  <>
+                    {' '}
+                    Loadmore <AiOutlineReload />
+                  </>
+                )}
               </button>
             )}
           </div>
